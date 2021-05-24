@@ -10,7 +10,6 @@
     "vite": "^2.3.3"
   },
   "dependencies": {
-    "glslCanvas": "^0.1.7",
-    "shader-canvas": "^0.8.3"
+    "glslCanvas": "^0.1.7"
   }
 }
