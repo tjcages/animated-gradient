@@ -6,6 +6,16 @@ uniform vec2 u_resolution;
 uniform float u_time;
 uniform vec2 u_mouse;
 
+uniform float u_speed;
+uniform float u_scale1;
+uniform float u_scale2;
+uniform float u_dimensions;
+uniform float u_base_color;
+uniform float u_simplex_coefficient;
+uniform float u_noise_strength;
+uniform float u_mouse_impact;
+
+
 
 vec3 random3(vec3 c){
 	float j=4096.*sin(dot(c,vec3(17.,59.4,15.)));
@@ -100,15 +110,15 @@ float quadraticInOut(float t){
 void main(){
 	vec2 mousePos=u_mouse.xy/u_resolution.x;
 	vec2 p=gl_FragCoord.xy/u_resolution.x;
-	vec3 p3=vec3(p,u_time*.15);
+	vec3 p3=vec3(p,u_time*u_speed);
 	
 	float value;
 	
 	// increase the amount of circles here
-	value=simplex3d_fractal(p3*1.2+1.);
+	value=simplex3d_fractal(p3*u_scale1+u_scale2);
 	
 	// mess around with what colors you want most
-	value=.25+.9*value;
+	value=u_base_color+u_simplex_coefficient*value;
 	
 	// if px position is near mousepos
 	// increase value
@@ -116,7 +126,7 @@ void main(){
 	float dist=pow(distance(mousePos,p),1.);
 	dist=1.-quadraticInOut(dist+.3);
 	
-	value+=dist*.2;
+	value+=dist*u_mouse_impact;
 	
 	vec3 color=vec3(0.);
 	
@@ -129,7 +139,7 @@ void main(){
 	}
 	
 	// added a bit of grain on top
-	color+=random(p,sin(u_time)*100.)*.08;
+	color+=random(p,sin(u_time)*100.)*u_noise_strength;
 	
 	gl_FragColor=vec4(
 		color,
