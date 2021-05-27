@@ -113,6 +113,9 @@ void main(){
 	vec2 p=gl_FragCoord.xy/u_resolution.x;
 	vec3 p3=vec3(p,u_time*u_speed);
 	
+	vec2 st=gl_FragCoord.xy/u_resolution.xy;
+	vec3 st3=vec3(st,u_time*u_speed);
+	
 	float value;
     float topBleed;
     // we can set a color for the top gradient
@@ -144,9 +147,10 @@ void main(){
 	
 	// meaning of each number :
 	// how low the bar is (0-1) ; how strong the noise affects it (0 -inf) ; scale of noise (how many "eyes") ; another way to edit scale
-	topBleed = 0.45 + 0.3*simplex3d_fractal(p3*0.7+3.);
+	topBleed = 0.17 + 0.3*simplex3d_fractal(p3*0.7+3.);
 	// first pass to remove all bottom white values
-	topBleed=smoothstep(0.20,  1. - (p.y) ,topBleed);
+	topBleed=smoothstep(0.,  1. - (st.y) ,topBleed);
+	// topBleed = smoothstep(0., 0.6, topBleed);
 	// second pass to remove more values, edit first value to change the length of the blend between top and bottom
     topBleed=smoothstep(0.2, 1., topBleed );
 	// match it with the color ( set as white for now, so not seeable)
