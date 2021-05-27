@@ -95,6 +95,10 @@ float random(vec2 st,float seed){
 	return fract(sin(dot(st.xy,vec2(seed,.233)))*43761.777);
 }
 
+float rand(vec2 co){
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
 // blue secondary
 vec3 colorA=vec3(.486,.69,.996);
 // red, primary
@@ -141,7 +145,7 @@ void main(){
 	}
 	
 	// added a bit of grain on top
-	color+=random(p,sin(u_time)*100.)*u_noise_strength;
+	color+=rand(p)*u_noise_strength;
 
     // add the top gradient 
 	
