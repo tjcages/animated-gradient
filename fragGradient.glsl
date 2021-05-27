@@ -110,7 +110,7 @@ float quadraticInOut(float t){
 void main(){
 	vec2 mousePos=u_mouse.xy/u_resolution.x;
 	vec2 p=gl_FragCoord.xy/u_resolution.x;
-	vec3 p3=vec3(p,u_time*1.2);
+	vec3 p3=vec3(p,u_time*u_speed);
 	
 	float value;
     float topBleed;
@@ -140,9 +140,15 @@ void main(){
 	color+=random(p,sin(u_time)*100.)*u_noise_strength;
 
     // add the top gradient 
-	topBleed=smoothstep(0.20,  1. - (p.y) ,0.3 + simplex3d_fractal(p3*0.2+3.));
+	
+	// meaning of each number :
+	// how low the bar is (0-1) ; how strong the noise affects it (0 -inf) ; scale of noise (how many "eyes") ; another way to edit scale
+	topBleed = 0.45 + 0.3*simplex3d_fractal(p3*0.7+3.);
+	// first pass to remove all bottom white values
+	topBleed=smoothstep(0.20,  1. - (p.y) ,topBleed);
+	// second pass to remove more values, edit first value to change the length of the blend between top and bottom
     topBleed=smoothstep(0.2, 1., topBleed );
-    // topBleed += p.y*0.2;
+	// match it with the color ( set as white for now, so not seeable)
     topBleedColor = vec3(topBleedColor.r * topBleed, topBleedColor.g * topBleed, topBleedColor.b * topBleed );
     color+= topBleedColor;
 	
