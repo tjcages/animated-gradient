@@ -76,7 +76,7 @@ function updateUniforms() {
     }
   }
 
-  if (!palette.blackAndWhiteMode) {
+  if (!params.blackAndWhiteMode) {
     sandbox.setUniform("u_color_a", palette.colorA[0] / 255, palette.colorA[1] / 255, palette.colorA[2] / 255)
     sandbox.setUniform("u_color_b", palette.colorB[0] / 255, palette.colorB[1] / 255, palette.colorB[2] / 255)
     sandbox.setUniform("u_color_c", palette.colorC[0] / 255, palette.colorC[1] / 255, palette.colorC[2] / 255)
