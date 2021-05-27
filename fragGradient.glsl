@@ -14,6 +14,7 @@ uniform float u_base_color;
 uniform float u_simplex_coefficient;
 uniform float u_noise_strength;
 uniform float u_mouse_impact;
+uniform float u_bleed_only;
 
 
 
@@ -152,13 +153,15 @@ void main(){
     topBleedColor = vec3(topBleedColor.r * topBleed, topBleedColor.g * topBleed, topBleedColor.b * topBleed );
     color+= topBleedColor;
 	
+
+    // gl_FragColor = vec4(vec3(value), 1.);
+	if(u_bleed_only == 1. ){
+		color = vec3(topBleed);
+	}
+
+	
 	gl_FragColor=vec4(
 		color,
 	1.);
-
-    // gl_FragColor = vec4(vec3(value), 1.);
-    // gl_FragColor = vec4(vec3(topBleed), 1.);
-    // gl_FragColor = vec4(vec3(1. - p.y), 1.);
-	
 	return;
 }
