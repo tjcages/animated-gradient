@@ -1,5 +1,5 @@
 import "./style.css"
-import fragShader from "./frag.glsl?raw"
+import fragShader from "./fragGradient.glsl?raw"
 import * as dat from "dat.gui"
 import GlslCanvas from "glslCanvas"
 
@@ -18,7 +18,7 @@ const params = {
   scale2: 1.0,
   baseColor: 0.25,
   simplexCoefficient: 0.9,
-  noiseStrength: 0.08,
+  noiseStrength: 0.02,
   mouseImpact: 0.2,
 }
 
@@ -28,7 +28,7 @@ gui.add(params, "scale1", 0.2, 5).onChange(updateUniforms)
 gui.add(params, "scale2", 0.1, 5).onChange(updateUniforms)
 gui.add(params, "baseColor", 0.05, 1).onChange(updateUniforms)
 gui.add(params, "simplexCoefficient", 0.2, 5).onChange(updateUniforms)
-gui.add(params, "noiseStrength", 0.02, 0.3).onChange(updateUniforms)
+gui.add(params, "noiseStrength", 0.005, 0.1).onChange(updateUniforms)
 gui.add(params, "mouseImpact", 0.05, 0.6).onChange(updateUniforms)
 
 function updateUniforms() {
