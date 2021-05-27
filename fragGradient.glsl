@@ -16,6 +16,10 @@ uniform float u_noise_strength;
 uniform float u_mouse_impact;
 uniform float u_bleed_only;
 
+uniform vec3 u_color_a;
+uniform vec3 u_color_b;
+uniform vec3 u_color_c;
+
 
 
 vec3 random3(vec3 c){
@@ -100,12 +104,11 @@ float rand(vec2 co){
 }
 
 // blue secondary
-vec3 colorA=vec3(.486,.69,.996);
-// red, primary
-vec3 colorB=vec3(.909,.258,0.);
-
-// yellow, tertiary
-vec3 colorC=vec3(1.,.83,.356);
+// vec3 colorA=vec3(.486,.69,.996);
+// // red, primary
+// vec3 colorB=vec3(.909,.258,0.);
+// // yellow, tertiary
+// vec3 colorC=vec3(1.,.83,.356);
 
 float quadraticInOut(float t){
 	float p=2.*t*t;
@@ -139,9 +142,9 @@ void main(){
 	vec3 color=vec3(0.);
 	
 	if(value<=.5){
-		color=mix(colorA,colorB,value*2.);
+		color=mix(u_color_a,u_color_b,value*2.);
 	}else{
-		color=mix(colorB,colorC,(value-.5)*2.);
+		color=mix(u_color_b,u_color_c,(value-.5)*2.);
 	}
 	
 	// added a bit of grain on top

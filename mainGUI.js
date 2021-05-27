@@ -21,6 +21,10 @@ const params = {
   noiseStrength: 0.02,
   mouseImpact: 0.2,
   bleedOnly: false,
+  blackAndWhiteMode: false,
+  colorA: [0.486 * 255, 0.69 * 255, 0.996 * 255],
+  colorB: [0.909 * 255, 0.258 * 255, 0 * 255],
+  colorC: [1 * 255, 0.83 * 255, 0.356 * 255],
 }
 
 gui.add(params, "speed", 0.05, 0.85).onChange(updateUniforms)
@@ -32,6 +36,10 @@ gui.add(params, "simplexCoefficient", 0.2, 5).onChange(updateUniforms)
 gui.add(params, "noiseStrength", 0.005, 0.1).onChange(updateUniforms)
 gui.add(params, "mouseImpact", 0.05, 0.6).onChange(updateUniforms)
 gui.add(params, "bleedOnly").onChange(updateUniforms)
+gui.add(params, "blackAndWhiteMode").onChange(updateUniforms)
+gui.addColor(params, "colorA").onChange(updateUniforms)
+gui.addColor(params, "colorB").onChange(updateUniforms)
+gui.addColor(params, "colorC").onChange(updateUniforms)
 
 function updateUniforms() {
   sandbox.setUniform("u_speed", params.speed)
@@ -44,6 +52,15 @@ function updateUniforms() {
   sandbox.setUniform("u_mouse_impact", params.mouseImpact)
   // plus sign converts to number
   sandbox.setUniform("u_bleed_only", +params.bleedOnly)
+  if (!params.blackAndWhiteMode) {
+    sandbox.setUniform("u_color_a", params.colorA[0] / 255, params.colorA[1] / 255, params.colorA[2] / 255)
+    sandbox.setUniform("u_color_b", params.colorB[0] / 255, params.colorB[1] / 255, params.colorB[2] / 255)
+    sandbox.setUniform("u_color_c", params.colorC[0] / 255, params.colorC[1] / 255, params.colorC[2] / 255)
+  } else {
+    sandbox.setUniform("u_color_a", 0, 0, 0)
+    sandbox.setUniform("u_color_b", 0.5, 0.5, 0.5)
+    sandbox.setUniform("u_color_c", 1, 1, 1)
+  }
 }
 
 updateUniforms()
