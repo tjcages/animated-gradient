@@ -159,7 +159,7 @@ void main(){
 	topBleed=smoothstep(0.,  1. - (st.y) ,topBleed);
 	// topBleed = smoothstep(0., 0.6, topBleed);
 	// second pass to remove more values, edit first value to change the length of the blend between top and bottom
-    topBleed=smoothstep(0.2, 1., topBleed );
+    topBleed=smoothstep(0.01, 1., topBleed );
 	// match it with the color ( set as white for now, so not seeable)
     topBleedColor = vec3(topBleedColor.r * topBleed, topBleedColor.g * topBleed, topBleedColor.b * topBleed );
     color+= topBleedColor;
