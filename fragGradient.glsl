@@ -126,7 +126,7 @@ void main(){
 	float value;
     float topBleed;
     // we can set a color for the top gradient
-    vec3 topBleedColor = vec3(1.0, 1.0, 1.0);
+    vec3 topBleedColor = vec3(1.0, 0, 1.0);
 	
 	// increase the amount of circles here
 	value=simplex3d_fractal(p3*u_scale1+u_scale2);	
@@ -163,13 +163,12 @@ void main(){
 	// match it with the color ( set as white for now, so not seeable)
     topBleedColor = vec3(topBleedColor.r * topBleed, topBleedColor.g * topBleed, topBleedColor.b * topBleed );
     color+= topBleedColor;
-	
+
 
     // gl_FragColor = vec4(vec3(value), 1.);
 	if(u_bleed_only == 1. ){
 		color = vec3(topBleed);
 	}
-
 	
 	gl_FragColor=vec4(
 		color,

@@ -15,8 +15,6 @@ uniform float u_simplex_coefficient;
 uniform float u_noise_strength;
 uniform float u_mouse_impact;
 
-
-
 vec3 random3(vec3 c){
 	float j=4096.*sin(dot(c,vec3(17.,59.4,15.)));
 	vec3 r;
@@ -87,23 +85,21 @@ const mat3 rot3 = mat3(-0.71, 0.52,-0.47,-0.08,-0.72,-0.68,-0.7,-0.45,0.56);
 /* directional artifacts can be reduced by rotating each octave */
 float simplex3d_fractal(vec3 m){
 	return .5333333*simplex3d(m*rot1);
-	
 }
 
 float random(vec2 st,float seed){
 	return fract(sin(dot(st.xy,vec2(seed,.233)))*43761.777);
 }
 
-// blue secondary
+// blue, primary
 vec3 colorA=vec3(.486,.69,.996);
-// red, primary
+// red, secondary
 vec3 colorB=vec3(.909,.258,0.);
-
 // yellow, tertiary
 vec3 colorC=vec3(1.,.83,.356);
 
-float quadraticInOut(float t){
-	float p=2.*t*t;
+float cubicInOut(float t){
+	float p=2.*t*t*t;
 	return t<.5?p:-p+(4.*t)-1.;
 }
 
@@ -117,14 +113,14 @@ void main(){
 	// increase the amount of circles here
 	value=simplex3d_fractal(p3*u_scale1+u_scale2);
 	
-	// mess around with what colors you want most
+	// mess around with what colors you want most often
 	value=u_base_color+u_simplex_coefficient*value;
 	
 	// if px position is near mousepos
 	// increase value
 	
 	float dist=pow(distance(mousePos,p),1.);
-	dist=1.-quadraticInOut(dist+.3);
+	dist=1.-cubicInOut(dist+.3);
 	
 	value+=dist*u_mouse_impact;
 	
